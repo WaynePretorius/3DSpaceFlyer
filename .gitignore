@@ -361,3 +361,14 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/Library
+/ProjectSettings
+/Temp
+/UserSettings
+/Assets/Samples/Terrain Tools/0.1.0-preview/Terrain Assets
+/Assets/Campfire Pack
+/Assets/JP Environmental Asset Pack
+/Assets/SkythianCat/Sunny_Village_LITE
+/Assets/_TerrainAutoUpgrade
+/Assets/StarSparrow
+/Assets/ImportedAssets
