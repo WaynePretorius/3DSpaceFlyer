@@ -4,31 +4,44 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-
+    //variable declared in conjuction with movement and clamping the ship to the edges of the screen
+    [Header("Movement Settings")]
     [SerializeField] float controlMovementSpeed = 25f;
     [SerializeField] float xClampMin = -5f;
     [SerializeField] float xClampMax = 5f;
     [SerializeField] float yClampMin = -5f;
     [SerializeField] float yClampMax = 5f;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    float verticalMovement;
+    float horizontalMovement;
+
+    //Variables declared for the local rotation, so the ship does not always look to the centre of the screen
+    [Header("Rotation Settings")]
+    [SerializeField] float transformPitchFacor = -1.2f;
+    [SerializeField] float pitchThrowFactor = -10f;
+    [SerializeField] float transformYawFactor = 1.5f;
+    [SerializeField] float rollThrowFactor = -30f;
+
+    //game states
+    bool isFiring = false;
+
+    //caching of abojects
+    [Header("Gameobjects needed")]
+    [SerializeField] GameObject[] lasers;
 
     // Update is called once per frame
     void Update()
     {
         MoveShip();
-        ShipFire();
+        RotateShip();
+        DetectFireButton();
     }
 
     //Function that will move the ship
     void MoveShip()
     {
         //get the input from the user and store it as a float
-        float horizontalMovement = Input.GetAxis(Tags.AXIS_HORIZONTAL);
-        float verticalMovement = Input.GetAxis(Tags.AXIS_VERTICAL);
+        horizontalMovement = Input.GetAxis(Tags.AXIS_HORIZONTAL);
+        verticalMovement = Input.GetAxis(Tags.AXIS_VERTICAL);
 
         //use the input to find the ship position on the screen, clamp it so the ship does not move out of the screen
         float xOffSet = horizontalMovement * Time.deltaTime * controlMovementSpeed;
@@ -44,9 +57,44 @@ public class PlayerMovement : MonoBehaviour
         transform.localPosition = new Vector3(clampedXPos, clampedYPos, transform.localPosition.z);
     }
 
-    //Fires projectiles from the ship
-    void ShipFire()
+    //Function that will rotate the ship on the yaw(y), pitch(x) and Roll(z)
+    void RotateShip()
     {
-        return;
+        //rotating the ship on the y axis, and giving it a bit of a nudge to look like it is going up or down
+        float pitchPosition = transform.localPosition.y * transformPitchFacor;
+        float pitchThrow = verticalMovement * pitchThrowFactor;
+
+        float pitch = pitchPosition + pitchThrow;
+        float yaw = transform.localPosition.x * transformYawFactor;
+        float roll = horizontalMovement * rollThrowFactor;
+
+        transform.localRotation = Quaternion.Euler(pitch, yaw, roll);
+    }
+
+    //Fires projectiles from the ship
+    void DetectFireButton()
+    {
+        
+        if (Input.GetButton(Tags.AXIS_FIRE1))
+        {
+            isFiring = true;
+            IsFiring(isFiring);
+        }
+        else
+        {
+            isFiring = false;
+            IsFiring(isFiring);
+        }
+
+    }
+
+    //function that utilizes the firing state
+    void IsFiring(bool fire)
+    {
+        foreach (GameObject laser in lasers)
+        {
+            var emissionEnable = laser.GetComponent<ParticleSystem>().emission;
+            emissionEnable.enabled = fire;
+        }
     }
 }
