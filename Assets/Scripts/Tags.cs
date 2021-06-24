@@ -12,4 +12,5 @@ public static class Tags
     public static string TAGS_OBSTAC = "Obstacles";
     public static string TAGS_COLLECT = "Collectable";
     public static string TAGS_ENEMY = "Enemy";
+    public static string TAGS_PARENT = "Parent";
 }
