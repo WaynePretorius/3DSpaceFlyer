@@ -114,7 +114,6 @@ MonoBehaviour:
   damageTakenPerHit: 10
   enemyExplosion: {fileID: 1010129401776421439, guid: 49b0c4a4aeb46e149b135bba3812c6cf, type: 3}
   enemyHit: {fileID: 1010129401776421439, guid: 8149d6f10f6baa648a3a6f6c24c8125b, type: 3}
-  instantiateParent: {fileID: 0}
 --- !u!1 &5850380796780015814
 GameObject:
   m_ObjectHideFlags: 0

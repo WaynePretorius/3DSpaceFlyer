@@ -41,7 +41,7 @@ public class Enemy : MonoBehaviour
         ProcessHit();
         scoreKeeper.ModifyScore(enemyScore);
         enemyHitPoints -= damage;
-        if(enemyHitPoints <= 0)
+        if(enemyHitPoints < 1)
         {
             DestroyEnemy();
         }        
